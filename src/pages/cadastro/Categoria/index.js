@@ -2,16 +2,16 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import PageDefault from '../../../components/PageDefault';
 import FormField from '../../../components/FormField';
+import Button from '../../../components/Button';
 
 function CadastroCategoria() {
-  
   const vlrIniciais = {
-  nome: '',
-  descricao: '',
-  cor:'',
-  }
-  const [categorias, setCategorias] = useState(['tst']);
-  const[values, setValues] = useState(vlrIniciais);
+    nome: '',
+    descricao: '',
+    cor: '',
+  };
+  const [categorias, setCategorias] = useState([]);
+  const [values, setValues] = useState(vlrIniciais);
 
   function setValue(chave, valor) {
     setValues({
@@ -21,92 +21,77 @@ function CadastroCategoria() {
     });
   }
   // funcao para capturar as mudanças do obj
-  function handleChange(infEvento){
-    //"abrindo" e atribuindo o valor a var 
-    const { getAttribute, value } = infEvento.target;
+  function handleChange(infEvento) {
+    // "abrindo" e atribuindo o valor a var
     setValue(
-      getAttribute('name'),
-      value
-      );
-    }
-
+      infEvento.target.getAttribute('name'),
+      infEvento.target.value,
+    );
+  }
 
   return (
     <PageDefault>
-      <h1>Cadastro de Categoria: {values.nome}</h1>
+      <h1>
+        Cadastro de Categoria:
+        {values.nome}
+      </h1>
 
       <form onSubmit={function handlerSubmit(infEvento) {
         infEvento.preventDefault();
         setCategorias([
-          //está "espalhando" o valor que esta na lista categorias 
+          // está "espalhando" o valor que esta na lista categorias
           ...categorias,
-          values
+          values,
         ]);
 
-        setValues({vlrIniciais})
+        setValues({ vlrIniciais });
+      }}
+      >
 
-      
-      }}>
-
-        <FormField 
+        <FormField
           label="Nome da Categoria"
           type="text"
           name="nome"
           value={values.nome}
-          onChange={handleChange}         
+          onChange={handleChange}
         />
 
-        
-<FormField 
+        <FormField
           label="Descricao"
-          type="??"
+          type="textarea"
           name="descricao"
           value={values.descricao}
           onChange={handleChange}
         />
 
-{/* 
-       <div>
-        <label>
-          Descrição:
-          <textarea
-            type="text"
-            value={values.descricao}
-            name="descricao"
-            onChange={handleChange}
-          />
-        </label>
-        </div>  */}
-
-<FormField 
+        <FormField
           label="Cor"
           type="color"
           name="cor"
           value={values.cor}
           onChange={handleChange}
         />
-        
-        <button>
+
+        <Button>
           Cadastrar
-        </button>
+        </Button>
+
       </form>
 
       <ul>
-        {categorias.map((categoria, indice) => {
-          return (
-            <li key={`${categoria}${indice}`}>
-              {categoria.nome}
-            </li>  
+        {categorias.map((categoria) => (
+          <li key={`${categoria.nome}`}>
+            {categoria.nome}
+          </li>
 
-          )})}
+        ))}
       </ul>
-
 
       <Link to="/">
         Ir para home
       </Link>
     </PageDefault>
-  )
+  );
 }
 
 export default CadastroCategoria;
