@@ -1,0 +1,9 @@
+{
+    "categorias": [{
+        "id":1,
+        "nome":"Test Software",
+        "descricao":"Uma categoria x",
+        "cor":"cbd1ff"
+    }
+]
+}
